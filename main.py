@@ -18,13 +18,20 @@ def simple_work_calc(n, a, b):
 	Returns: the value of W(n).
 	"""
 	# TODO
+	res_swc = 0
+	if(n<=1):
+		return res_swc
+	else:
+		nn=n//b
+		res_swc = a * simple_work_calc(nn,a,b) + n
+	return res_swc
 	pass
 
 def test_simple_work():
 	""" done. """
-	assert work_calc(10, 2, 2) == #TODO
-	assert work_calc(20, 3, 2) == #TODO
-	assert work_calc(30, 4, 2) == #TODO
+	assert simple_work_calc(10, 2, 2) == 28
+	assert simple_work_calc(20, 3, 2) == 149
+	assert simple_work_calc(30, 4, 2) == 394
 
 def work_calc(n, a, b, f):
 	"""Compute the value of the recurrence $W(n) = aW(n/b) + f(n)
@@ -39,6 +46,14 @@ def work_calc(n, a, b, f):
 	Returns: the value of W(n).
 	"""
 	# TODO
+	res_wc = 0
+	if(n<=1):
+		return res_wc
+	else:
+		nn= n//b
+		f= simple_work_calc(nn,a,b)
+		res_wc = a * work_calc(nn,a,b,f)+ f
+	return res_wc
 	pass
 
 def span_calc(n, a, b, f):
@@ -54,13 +69,21 @@ def span_calc(n, a, b, f):
 	Returns: the value of W(n).
 	"""
 	# TODO
+	res_s = 0
+	if(n<=1):
+		return res_s
+	else:
+		nn= n//b
+		f= work_calc(nn,a,b,simple_work_calc(nn,a,b))
+		res_s = a * work_calc(nn,a,b,f)+ f
+	return res_s
 	pass
 
 def test_work():
 	""" done. """
-	assert work_calc(10, 2, 2,lambda n: 1) == #TODO
-	assert work_calc(20, 1, 2, lambda n: n*n) == #TODO
-	assert work_calc(30, 3, 2, lambda n: n) == #TODO
+	assert work_calc(10, 2, 2,lambda n: 1) == 13
+	assert work_calc(20, 1, 2, lambda n: n*n) == 26
+	assert work_calc(30, 3, 2, lambda n: n) == 138
 
 def compare_work(work_fn1, work_fn2, sizes=[10, 20, 50, 100, 1000, 5000, 10000]):
 	"""
